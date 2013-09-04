@@ -7,6 +7,7 @@ import static com.donnfelker.android.bootstrap.core.Constants.Http.PARSE_APP_ID;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.PARSE_REST_API_KEY;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.URL_CHECKINS;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.URL_NEWS;
+import static com.donnfelker.android.bootstrap.core.Constants.Http.URL_WORKOUTS;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.URL_USERS;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -48,9 +49,14 @@ public class BootstrapService {
     private static final int TIMEOUT = 30 * 1000;
 
 
+
     private static class UsersWrapper {
 
         private List<User> results;
+    }
+
+    private static class WorkoutsWrapper {
+        private List<Workout> results;
     }
 
     private static class NewsWrapper {
@@ -203,6 +209,24 @@ public class BootstrapService {
         try {
             HttpRequest request = execute(HttpRequest.get(URL_NEWS));
             NewsWrapper response = fromJson(request, NewsWrapper.class);
+            if (response != null && response.results != null)
+                return response.results;
+            return Collections.emptyList();
+        } catch (HttpRequestException e) {
+            throw e.getCause();
+        }
+    }
+
+
+    /**
+     * Get all the workouts that exist on the Parse.com api.
+     *
+     * @return non-null but possibly empty list of workouts.
+     */
+    public List<Workout> getWorkouts() throws IOException {
+        try {
+            HttpRequest request = execute(HttpRequest.get(URL_WORKOUTS));
+            WorkoutsWrapper response = fromJson(request, WorkoutsWrapper.class);
             if (response != null && response.results != null)
                 return response.results;
             return Collections.emptyList();

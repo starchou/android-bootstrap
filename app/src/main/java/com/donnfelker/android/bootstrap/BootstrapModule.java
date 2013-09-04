@@ -15,6 +15,7 @@ import com.donnfelker.android.bootstrap.ui.NewsActivity;
 import com.donnfelker.android.bootstrap.ui.NewsListFragment;
 import com.donnfelker.android.bootstrap.ui.UserActivity;
 import com.donnfelker.android.bootstrap.ui.UserListFragment;
+import com.donnfelker.android.bootstrap.ui.WorkoutsFragment;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -40,7 +41,8 @@ import dagger.Provides;
                 NewsListFragment.class,
                 UserActivity.class,
                 UserListFragment.class,
-                TimerService.class
+                TimerService.class,
+                WorkoutsFragment.class
         }
 
 )
